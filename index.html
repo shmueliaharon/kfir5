@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>מסלול הטיול שלי</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <button id="btnHome" class="homeBtn" type="button">בית</button>
+    <div class="titles">
+      <div id="appTitle" class="title">מסלול הטיול שלי</div>
+      <div id="appSub" class="subtitle">בחר יום כדי לראות פירוט</div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section id="viewHome" class="view">
+      <div class="controls">
+        <div id="countryBar" class="countryBar"></div>
+        <div class="searchRow">
+          <input id="q" class="search" type="search" placeholder="חיפוש (עיר, מקום, מסעדה, אטרקציה)" />
+          <button id="btnClear" class="btnGhost" type="button">נקה</button>
+        </div>
+      </div>
+
+      <div id="dayList" class="dayList"></div>
+      <button id="btnMore" class="btnMore hidden" type="button">טען עוד</button>
+    </section>
+
+    <section id="viewDay" class="view hidden">
+      <div class="dayHead">
+        <div>
+          <div id="dayTitle" class="dayTitle"></div>
+          <div id="dayMeta" class="dayMeta"></div>
+        </div>
+        <a id="btnMapsDay" class="btn" target="_blank" rel="noopener">פתח במפות</a>
+      </div>
+
+      <div class="card">
+        <div class="cardTitle">לינה</div>
+        <div id="dayLodging" class="cardBody"></div>
+      </div>
+
+      <div class="card">
+        <div class="cardTitle">מעברים</div>
+        <ul id="dayTransfers" class="list"></ul>
+      </div>
+
+      <div class="card" id="restaurantsCard">
+        <div class="cardTitle">מסעדות</div>
+        <ul id="dayRestaurants" class="list"></ul>
+      </div>
+
+      <div class="card">
+        <div class="cardTitle">אטרקציות ומקומות</div>
+        <div id="placesList" class="places"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
