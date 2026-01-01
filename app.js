@@ -1,3 +1,11 @@
+const COUNTRY_FLAGS = {
+  'הכל': '🌏',
+  'תאילנד': '🇹🇭',
+  'לאוס': '🇱🇦',
+  'וייטנאם': '🇻🇳',
+  'יפן': '🇯🇵'
+};
+
 const DATA_URL = 'itinerary.json';
 let DATA = null;
 
@@ -50,7 +58,8 @@ function buildCountryBar(data){
 
   bar.innerHTML = opts.map(c=>{
     const cls = 'countryChip' + (c === state.selectedCountry ? ' isActive' : '');
-    return '<button type="button" class="' + cls + '" data-country="' + escapeHtml(c) + '">' + escapeHtml(c) + '</button>';
+    const flag = COUNTRY_FLAGS[c] || '';
+    return '<button type="button" class="' + cls + '" data-country="' + escapeHtml(c) + '">' + (flag ? (flag + ' ') : '') + escapeHtml(c) + '</button>';
   }).join('');
 
   bar.querySelectorAll('button[data-country]').forEach(btn=>{
