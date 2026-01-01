@@ -159,3 +159,71 @@ body{
 
 
 .placeLinks{display:flex;gap:8px;align-items:center;}
+
+
+/* Typography and RTL improvements */
+body{
+  font-family: 'Heebo', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  line-height: 1.55;
+}
+.h1, .titleBig{
+  letter-spacing: 0;
+}
+.card{
+  padding: 14px 14px 12px;
+}
+.metaRow{
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.placeCard{
+  border-radius: 14px;
+}
+.placeHeader{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+}
+.placeActions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.btnMini{
+  border: 1px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.65);
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btnMini:hover{
+  background: rgba(255,255,255,.9);
+}
+.pill{
+  display:inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(99,102,241,.10);
+  border: 1px solid rgba(99,102,241,.25);
+  font-size: 12px;
+}
+.placeMeta{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:6px;
+}
+.detailsToggle{
+  margin-top:8px;
+}
+.detailsBox{
+  margin-top:8px;
+  padding:10px 10px;
+  border-radius:12px;
+  background: rgba(15,23,42,.04);
+  border:1px solid rgba(15,23,42,.08);
+}
+.hidden{
+  display:none !important;
+}

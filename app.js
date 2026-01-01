@@ -18,6 +18,12 @@ function el(id){ return document.getElementById(id); }
 function show(node){ node.classList.remove('hidden'); }
 function hide(node){ node.classList.add('hidden'); }
 
+
+function openMap(url){
+  if(!url) return;
+  window.open(url, '_blank', 'noopener');
+}
+
 function escapeHtml(v){
   const s = String(v ?? '');
   return s
@@ -164,6 +170,9 @@ function placeCard(p, fallbackQuery){
   const desc = String(p.description || '').trim();
   const tips = String(p.tips || '').trim();
   let websiteRaw = String(p.website || '').trim();
+  const duration = Number(p.duration_minutes || 0);
+  const cost = Number(p.cost_ils || 0);
+
 
   // Normalize website URL if user entered "www..."
   if (websiteRaw && websiteRaw.startsWith('www.')) websiteRaw = 'https://' + websiteRaw;
@@ -186,21 +195,34 @@ function placeCard(p, fallbackQuery){
 
   return `
     <div class="placeCard">
-      <div class="placeTop">
+      <div class="placeHeader">
         <div>
           <div class="placeName">${escapeHtml(name || 'מקום')}</div>
           <div class="placeType">${escapeHtml(type)}</div>
+          <div class="placeMeta">
+            ${duration ? `<span class="pill">⏱ ${escapeHtml(duration)} דק׳</span>` : ''}
+            ${(cost || cost === 0) && duration ? `<span class="pill">💰 ~${escapeHtml(cost)} ₪</span>` : ''}
+            ${(cost || cost === 0) && !duration ? `<span class="pill">💰 ~${escapeHtml(cost)} ₪</span>` : ''}
+          </div>
         </div>
-        <div class="placeLinks">
-          <a class="smallLink" target="_blank" rel="noopener" href="${mapsUrl}">מפות</a>
-          <a class="smallLink" target="_blank" rel="noopener" href="${infoUrl}">${infoLabel}</a>
+
+        <div class="placeActions">
+          <button type="button" class="btnMini" data-nav="${escapeHtml(mapsUrl)}">נווט</button>
+          <a class="btnMini" target="_blank" rel="noopener" href="${mapsUrl}">מפות</a>
+          <a class="btnMini" target="_blank" rel="noopener" href="${infoUrl}">${escapeHtml(infoLabel)}</a>
+          <button type="button" class="btnMini" data-copy="${escapeHtml(name)}">העתק שם</button>
         </div>
       </div>
-      ${desc ? `<div class="placeDesc">${escapeHtml(desc)}</div>` : ''}
-      ${tips ? `<div class="placeTips"><b>טיפ:</b> ${escapeHtml(tips)}</div>` : ''}
-      <div class="placeActions">
-        <button class="smallBtn" data-copy="${escapeHtml(name)}">העתק שם</button>
-      </div>
+
+      ${(desc || tips) ? `
+        <div class="detailsToggle">
+          <button type="button" class="btnMini" data-toggle-details="1">הצג פרטים</button>
+        </div>
+        <div class="detailsBox hidden">
+          ${desc ? `<div class="placeDesc">${escapeHtml(desc)}</div>` : ''}
+          ${tips ? `<div class="placeTips"><b>טיפ:</b> ${escapeHtml(tips)}</div>` : ''}
+        </div>
+      ` : ''}
     </div>
   `;
 }
@@ -255,6 +277,30 @@ function renderDay(data, idx){
       const old = btn.textContent;
       btn.textContent = 'הועתק';
       setTimeout(()=> btn.textContent = old, 900);
+    });
+  });
+
+  document.querySelectorAll('[data-nav]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const url = btn.getAttribute('data-nav') || '';
+      openMap(url);
+    });
+  });
+
+  document.querySelectorAll('[data-toggle-details]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const card = btn.closest('.placeCard');
+      if (!card) return;
+      const box = card.querySelector('.detailsBox');
+      if (!box) return;
+      const isHidden = box.classList.contains('hidden');
+      if (isHidden){
+        box.classList.remove('hidden');
+        btn.textContent = 'הסתר פרטים';
+      } else {
+        box.classList.add('hidden');
+        btn.textContent = 'הצג פרטים';
+      }
     });
   });
 }
